@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
+	//table
 	protected $table = 'payment';
-	protected $fillable = 
-							[
-								'transactionID', 'bankCode', 'bankInterface', 
-								'reference', 'description', 'totalAmount',
-								'payer_id', 'buyer_id', 'ipAddress', 'userAgent'
-							];
+	//fields to use
+	protected $fillable = ['transactionID', 'bankCode', 'bankInterface',
+							'reference', 'description', 'totalAmount',
+							'payer_id', 'buyer_id', 'ipAddress', 'userAgent'];
 }

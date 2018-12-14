@@ -52,6 +52,11 @@ class SavePersons extends FormRequest
 		];
 	}
 	
+	/**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
 	public function messages()
 	{
 		return

@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
-    //
+    
+	//table
 	protected $table = 'person';
-	protected $fillable = 
-							[
-								'document','documentType','firstName','lastName','company'
-								,'emailAddress', 'address', 'city', 'province', 'country'
-								,'phone', 'mobile'
-							];
+	//fields to use
+	protected $fillable = ['document','documentType','firstName','lastName','company'
+							,'emailAddress', 'address', 'city', 'province', 'country'
+							,'phone', 'mobile'];
 }

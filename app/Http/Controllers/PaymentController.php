@@ -31,6 +31,10 @@ class PaymentController extends Controller
 		date_default_timezone_set('America/Bogota');		
 	}
 	
+	/*
+	* Obtain the ws client
+	* @return void
+	*/
 	public function getWsClient()
 	{
 		try
@@ -46,12 +50,17 @@ class PaymentController extends Controller
 		}
 	}
 	
+	/*
+	* Obtain the bank list
+	* @return array
+	*/
 	public function getBanks()
 	{
 		$this->getWsClient();
 			
 		if($this->wsError == 0)
 		{
+			//create additional params and send this to the authentication object
 			$additional1 = new PseAttribute('date', date('Y-m-d'));
 			$additional2 = new PseAttribute('time', date('H:i:s'));
 			$additional = ['item'=>[$additional1, $additional2]];
@@ -81,6 +90,10 @@ class PaymentController extends Controller
 		}
 	}
 	
+	/*
+	* Save the data of payer and buyer in database and return to the next page
+	* @return redirection
+	*/
 	public function savePersons(SavePersons $request)
 	{
 		$validated = $request->validated();	
@@ -124,6 +137,10 @@ class PaymentController extends Controller
 		return redirect()->action('PaymentController@step1', ['payer'=>$payer->id,'buyer'=>$buyer->id]);
 	}
 	
+	/*
+	* Obtain data of payer, buyer, banks and webservice response
+	* @return view
+	*/
 	public function step1($payer, $buyer, Request $request)
 	{
 		// Cache::forget('banks');
@@ -141,6 +158,10 @@ class PaymentController extends Controller
 		return view('step1', ['info'=>$info]);
 	}
 	
+	/*
+	* Get data of payer and buyer in database, and create Payment
+	* @return ajax response array
+	*/
 	public function step2(Request $request)
 	{
 		$payer = Person::find($request->input('payer'));
@@ -419,6 +440,10 @@ class PaymentController extends Controller
 			return ['result'=>$result, 'result2'=>$result2, 'result3'=>$result3];
 	}
 	
+	/*
+	* Get data of transaction
+	* @return ajax response array
+	*/
 	public function step3($reference, Request $request)
 	{
 		$additional1  = new PseAttribute('date', date('Y-m-d'));
@@ -549,6 +574,10 @@ class PaymentController extends Controller
 		return view('step3', ['result'=>$result]);				
 	}
 	
+	/*
+	* Get data of pending transactions
+	* @return ajax response array
+	*/
 	public function pendingTransactions()
 	{
 		$transactions = DB::table('transaction')
